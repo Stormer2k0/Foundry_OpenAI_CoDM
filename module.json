@@ -8,7 +8,7 @@
     }
     ],
   "esmodules": [
-      "module.js"
+      "scripts/module.js"
     ],
   "version": "1.0.0",
   "url": "This is auto replaced",
