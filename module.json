@@ -1,31 +1,32 @@
 {
-  "id": "OpenGPT-coDM",
-  "title": "Your very own AI co-DM!",
-  "description": "I promise it the Ai won't try to kill you, it might suggest to kill your players though",
-  "authors": [
-    {
-    "name": "Stormer2k0"
+    "id": "OpenGPT-coDM",
+    "title": "Your very own AI co-DM!",
+    "description": "I promise it the Ai won't try to kill you, it might suggest to kill your players though",
+    "authors": [
+        {
+            "name": "Stormer2k0"
+        }
+    ],
+    "esmodules": [
+        "scripts/module.js"
+    ],
+    "version": "1.0.0",
+    "url": "This is auto replaced",
+    "manifest": "This is auto replaced",
+    "download": "This is auto replaced",
+    "license": "LICENSE",
+    "readme": "README.md",
+    "compatibility": {
+        "minimum": "9",
+        "verified": "10"
+    },
+    "relationships": {
+        "requires": [
+            {
+                "id": "_chatcommands",
+                "type": "module",
+                "manifest": "https://github.com/League-of-Foundry-Developers/Chat-Commands-Lib/releases/download/1.2.0/module.json"
+            }
+        ]
     }
-    ],
-  "esmodules": [
-      "module.js"
-    ],
-  "version": "1.0.0",
-  "url": "This is auto replaced",
-  "manifest": "This is auto replaced",
-  "download": "This is auto replaced",
-  "license": "LICENSE",
-  "readme": "README.md",
-  "compatibility": {
-    "minimum": "9",
-    "verified": "10"
-  },
-
-  "relationships": {
-    "requires": [{
-      "id": "_chatcommands",
-      "type": "module",
-      "manifest": "https://github.com/League-of-Foundry-Developers/Chat-Commands-Lib/releases/download/1.2.0/module.json"
-    }]
-  } 
 }
