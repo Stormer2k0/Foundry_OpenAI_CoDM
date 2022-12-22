@@ -11,6 +11,11 @@
       "module.js"
     ],
   "version": "1.0.0",
+  "url": "This is auto replaced",
+  "manifest": "This is auto replaced",
+  "download": "This is auto replaced",
+  "license": "LICENSE",
+  "readme": "README.md",
   "compatibility": {
     "minimum": "9",
     "verified": "10"
