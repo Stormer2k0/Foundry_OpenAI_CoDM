@@ -1,11 +1,7 @@
-![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
+![](https://img.shields.io/badge/Foundry-v10.291-informational)
 <!--- Downloads @ Latest Badge -->
 <!--- replace <user>/<repo> with your username/repository -->
-<!--- ![Latest Release Download Count](https://img.shields.io/github/downloads/<user>/<repo>/latest/module.zip) -->
-
-<!--- Forge Bazaar Install % Badge -->
-<!--- replace <your-module-name> with the `name` in your manifest -->
-<!--- ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2F<your-module-name>&colorB=4aa94a) -->
+![Latest Release Download Count](https://img.shields.io/github/downloads/Stormer2k0/Foundry_OpenAI_CoDM/latest/module.zip) 
 
 My first attemped at making a module.
 This uses api calls to talk interact with the openai text-davinci-003 model.
