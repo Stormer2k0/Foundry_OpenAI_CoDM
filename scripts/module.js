@@ -79,7 +79,7 @@ Hooks.once("init", function () {
   foundryGame = getGame();
 
   //create api key setting
-  foundryGame.settings.register("OpenGPT-coDM", "API_key", {
+  foundryGame.settings.register("OpenAI_CoDM", "API_key", {
       name: foundryGame.i18n.localize("OpenAI API key:"),
       hint: foundryGame.i18n.localize("You can find this at: https://beta.openai.com/account/api-keys"),
       scope: "world",
@@ -89,7 +89,7 @@ Hooks.once("init", function () {
   });
 
   //create temperature setting
-  foundryGame.settings.register("OpenGPT-coDM", "temperature", {
+  foundryGame.settings.register("OpenAI_CoDM", "temperature", {
     name: foundryGame.i18n.localize("Temperature"),
     hint: foundryGame.i18n.localize("Sets how predictable the AI is, enter a value between 0.1 and 1, 1 being the least predicatble"),
     scope: "client",
@@ -99,7 +99,7 @@ Hooks.once("init", function () {
   });
 
   //create dm-only setting
-  foundryGame.settings.register("OpenGPT-coDM", "DM-Only", {
+  foundryGame.settings.register("OpenAI_CoDM", "DM-Only", {
     name: foundryGame.i18n.localize("DM-only"),
     hint: foundryGame.i18n.localize("Sets who can use the openai command, default is dm-only to prevent players from burning your tokens"),
     scope: "world",
