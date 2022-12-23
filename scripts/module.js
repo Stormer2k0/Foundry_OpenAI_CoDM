@@ -38,13 +38,13 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
     shouldDisplayToChat: false,
     iconClass: "fa-sticky-note",
     description: "Talk to OpenAi",
-    gmOnly: foundryGame.settings.get("OpenGPT-coDM", "DM-Only")
+    gmOnly: foundryGame.settings.get("OpenAI_CoDM", "DM-Only")
   }));
 });
 
 //fetch function
 async function getOpenAiResponse(prompt, model) {
-  const apiKey = foundryGame.settings.get("OpenGPT-coDM", "API_key");
+  const apiKey = foundryGame.settings.get("OpenAI_CoDM", "API_key");
 
     const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
@@ -56,7 +56,7 @@ async function getOpenAiResponse(prompt, model) {
       body: JSON.stringify({
         prompt: prompt,
         model: model,
-        temperature: foundryGame.settings.get("OpenGPT-coDM", "temperature"),
+        temperature: foundryGame.settings.get("OpenAI_CoDM", "temperature"),
         max_tokens: 2048
         })
     });  
