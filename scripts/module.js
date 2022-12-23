@@ -7,15 +7,20 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
       console.log("Invoked /openai");
 
       ChatMessage.create({
-        content: "YOUR PROMPT: " + messageText,
+        content: "<strong> YOUR PROMPT: </strong></br>" + messageText,
         whisper: [chatdata.user]
       });
 
       const response = await getOpenAiResponse(messageText, 'text-davinci-003');
 
+      //get the part of the response I want
       const text = response.choices[0].text;
+
+      //formats the response to html
+      const formattedresponse = text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
       ChatMessage.create({
-        content: "RESPONSE: " + text,
+        content: "<strong> RESPONSE: </strong>" + formattedresponse,
         whisper: [chatdata.user]
       });
     },
@@ -61,7 +66,7 @@ Hooks.once("init", function () {
   foundryGame.settings.register("OpenGPT-coDM", "API_key", {
       name: foundryGame.i18n.localize("OpenAI API key:"),
       hint: foundryGame.i18n.localize("You can find this at: https://beta.openai.com/account/api-keys"),
-      scope: "client",
+      scope: "world",
       config: true,
       type: String,
       default: ""
@@ -69,11 +74,11 @@ Hooks.once("init", function () {
 
   foundryGame.settings.register("OpenGPT-coDM", "temperature", {
     name: foundryGame.i18n.localize("Temperature"),
-    hint: foundryGame.i18n.localize("Sets how predictable the AI is, enter a value between 0.1 and 1"),
+    hint: foundryGame.i18n.localize("Sets how predictable the AI is, enter a value between 0.1 and 1, 1 being the least predicatble"),
     scope: "client",
     config: true,
     type: Number,
-    default: 0.5
+    default: 0.8
   });
 
 });
