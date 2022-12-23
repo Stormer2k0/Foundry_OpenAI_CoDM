@@ -14,7 +14,14 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
       const response = await getOpenAiResponse(messageText, 'text-davinci-003');
 
       //get the part of the response I want
-      const text = response.choices[0].text;
+      try {const text = response.choices[0].text; }
+      catch(error){
+        ChatMessage.create({
+          content: "<strong> RESPONSE: </strong></br>" + response.error.message,
+          whisper: [chatdata.user]
+        }); 
+        return;
+      }
 
       //formats the response to html
       const formattedresponse = text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -26,31 +33,30 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
     },
     shouldDisplayToChat: false,
     iconClass: "fa-sticky-note",
-    description: "Talk to OpenAi"
+    description: "Talk to OpenAi",
+    gmOnly: foundryGame.settings.get("OpenGPT-coDM", "DM-Only")
   }));
 });
 
 async function getOpenAiResponse(prompt, model) {
   const apiKey = foundryGame.settings.get("OpenGPT-coDM", "API_key");
 
-  const response = await fetch('https://api.openai.com/v1/completions', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      prompt: prompt,
-      model: model,
-      temperature: foundryGame.settings.get("OpenGPT-coDM", "temperature"),
-      max_tokens: 2048
-      })
-  });
-      
-  const responseJson = await response.json();
-      
-  return responseJson;
+    const response = await fetch('https://api.openai.com/v1/completions', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        model: model,
+        temperature: foundryGame.settings.get("OpenGPT-coDM", "temperature"),
+        max_tokens: 2048
+        })
+    });  
+    const responseJson = await response.json();
+    return responseJson;
 }
 
 let foundryGame;
@@ -79,6 +85,15 @@ Hooks.once("init", function () {
     config: true,
     type: Number,
     default: 0.8
+  });
+
+  foundryGame.settings.register("OpenGPT-coDM", "DM-Only", {
+    name: foundryGame.i18n.localize("DM-only"),
+    hint: foundryGame.i18n.localize("Sets who can use the openai command, default is dm-only to prevent players from burning your tokens"),
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true
   });
 
 });
