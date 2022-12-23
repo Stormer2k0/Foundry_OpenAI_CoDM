@@ -1,19 +1,20 @@
 Hooks.on("chatCommandsReady", function(chatCommands) {
 
-  // This modifies the text that will end up in the created message
+  // register /openai command
   chatCommands.registerCommand(chatCommands.createCommandFromData({
     commandKey: "/openai",
     invokeOnCommand: async (chatlog, messageText, chatdata) => {
-      console.log("Invoked /openai");
 
+      // outputs your prompt to chat
       ChatMessage.create({
         content: "<strong> YOUR PROMPT: </strong></br>" + messageText,
         whisper: [chatdata.user]
       });
 
+      // interact with the api
       const response = await getOpenAiResponse(messageText, 'text-davinci-003');
 
-      //get the part of the response I want
+      //get the part of the response or error I want
       try {const text = response.choices[0].text; }
       catch(error){
         ChatMessage.create({
@@ -26,11 +27,14 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
       //formats the response to html
       const formattedresponse = text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
+      //outputs the response to chat
       ChatMessage.create({
         content: "<strong> RESPONSE: </strong>" + formattedresponse,
         whisper: [chatdata.user]
       });
     },
+
+    //settings of the command
     shouldDisplayToChat: false,
     iconClass: "fa-sticky-note",
     description: "Talk to OpenAi",
@@ -38,6 +42,7 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
   }));
 });
 
+//fetch function
 async function getOpenAiResponse(prompt, model) {
   const apiKey = foundryGame.settings.get("OpenGPT-coDM", "API_key");
 
@@ -55,20 +60,25 @@ async function getOpenAiResponse(prompt, model) {
         max_tokens: 2048
         })
     });  
+
+    //turn the response into a json and return
     const responseJson = await response.json();
     return responseJson;
 }
 
-let foundryGame;
 
+//select the game, needed for settings
+let foundryGame;
 function getGame() {
   return game;
 }
 
 Hooks.once("init", function () {
 
+
   foundryGame = getGame();
-  // Add settings option for URL of Discord Webhook
+
+  //create api key setting
   foundryGame.settings.register("OpenGPT-coDM", "API_key", {
       name: foundryGame.i18n.localize("OpenAI API key:"),
       hint: foundryGame.i18n.localize("You can find this at: https://beta.openai.com/account/api-keys"),
@@ -78,6 +88,7 @@ Hooks.once("init", function () {
       default: ""
   });
 
+  //create temperature setting
   foundryGame.settings.register("OpenGPT-coDM", "temperature", {
     name: foundryGame.i18n.localize("Temperature"),
     hint: foundryGame.i18n.localize("Sets how predictable the AI is, enter a value between 0.1 and 1, 1 being the least predicatble"),
@@ -87,6 +98,7 @@ Hooks.once("init", function () {
     default: 0.8
   });
 
+  //create dm-only setting
   foundryGame.settings.register("OpenGPT-coDM", "DM-Only", {
     name: foundryGame.i18n.localize("DM-only"),
     hint: foundryGame.i18n.localize("Sets who can use the openai command, default is dm-only to prevent players from burning your tokens"),
