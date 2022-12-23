@@ -1,7 +1,7 @@
 Use this link to download the module: https://github.com/Stormer2k0/Foundry_OpenAI_CoDM/releases/latest/download/module.json
 
 My first attemped at making a module.
-This uses api calls to talk interact with the openai text-davinci-003 model.
+This uses api calls to interact with the openai text-davinci-003 model.
 
 First enter you api own API key in the settings.
 
