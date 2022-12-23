@@ -1,7 +1,4 @@
-![](https://img.shields.io/badge/Foundry-v10.291-informational)
-<!--- Downloads @ Latest Badge -->
-<!--- replace <user>/<repo> with your username/repository -->
-![Latest Release Download Count](https://img.shields.io/github/downloads/Stormer2k0/Foundry_OpenAI_CoDM/latest/module.zip) 
+Use this link to download the module: https://github.com/Stormer2k0/Foundry_OpenAI_CoDM/releases/latest/download/module.json
 
 My first attemped at making a module.
 This uses api calls to talk interact with the openai text-davinci-003 model.
