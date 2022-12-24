@@ -14,8 +14,9 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
       // interact with the api
       const response = await getOpenAiResponse(messageText, 'text-davinci-003');
 
-      //get the part of the response or error I want
-      try {const text = response.choices[0].text; }
+      //get the part of the response or error I want\
+      const text
+      try {text= response.choices[0].text; }
       catch(error){
         ChatMessage.create({
           content: "<strong> RESPONSE: </strong></br>" + response.error.message,
