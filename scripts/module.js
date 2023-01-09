@@ -14,15 +14,16 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
       // interact with the api
       const response = await getOpenAiResponse(messageText, 'text-davinci-003');
 
-      //get the part of the response or error I want\
-      const text
-      try {text= response.choices[0].text; }
+      //get the part of the response I want or post the error in chat.
+
+      let text;
+      try{text= response.choices[0].text;}
       catch(error){
         ChatMessage.create({
-          content: "<strong> RESPONSE: </strong></br>" + response.error.message,
-          whisper: [chatdata.user]
-        }); 
-        return;
+            content: "<strong>ERROR:</strong><br>" + response.error.message,
+            whisper: [chatdata.user]
+          });
+          return;
       }
 
       //formats the response to html
@@ -47,7 +48,8 @@ Hooks.on("chatCommandsReady", function(chatCommands) {
 async function getOpenAiResponse(prompt, model) {
   const apiKey = foundryGame.settings.get("OpenAI_CoDM", "API_key");
 
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    let response;
+    response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -60,7 +62,7 @@ async function getOpenAiResponse(prompt, model) {
         temperature: foundryGame.settings.get("OpenAI_CoDM", "temperature"),
         max_tokens: 2048
         })
-    });  
+    });
 
     //turn the response into a json and return
     const responseJson = await response.json();
